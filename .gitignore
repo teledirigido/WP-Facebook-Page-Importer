@@ -1,0 +1,13 @@
+# SASS files
+# If using SASS to compile stylesheets this saves conflicts, plus there not needed! #
+wp-content/files_mf/cache/*
+wp-content/.sass-cache/*
+*.css.map
+ 
+# no need for these #
+*[Tt]humbs.db
+readme.html
+license.txt
+.log
+.htaccess
+.DS_Store

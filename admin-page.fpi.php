@@ -2,8 +2,6 @@
 
 $this->options = get_option( 'fpi_option' );
 
-
-
 ?>
 
 
@@ -16,8 +14,9 @@ $this->options = get_option( 'fpi_option' );
 	<?php 
 
 	// Login
-	if( !FPI_SDK::is_logged() ):
-		$fb = FPI_SDK::init();	
+	if( !FPI_SDK::is_logged() && FPI_SDK::has_credentials() ):
+
+		$fb = FPI_SDK::init();
 	    $helper = $fb->getRedirectLoginHelper();
 	    $permissions = ['email', 'user_likes']; // optional
 	    $login_url = $helper->getLoginUrl( admin_url('/tools.php?page=fpi-settings&logged=1'), $permissions);

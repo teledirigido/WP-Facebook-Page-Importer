@@ -117,5 +117,18 @@ class FPI_SDK {
 
 		return ( isset($_GET['logged']) && ($_GET['logged'] == 1) || isset($option['fpi_access_token']) );
 	}
+
+	public function has_credentials(){
+
+		$options = get_option( 'fpi_option' );	
+
+		if( !isset($options['fpi_app_secret']) || empty($options['fpi_app_secret']) )
+			return false;
+
+		if( !isset($options['fpi_app_id']) || empty($options['fpi_app_id']) )
+			return false;
+
+		return true;
+	}
 	
 }

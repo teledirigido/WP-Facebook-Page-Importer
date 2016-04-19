@@ -118,7 +118,7 @@ class FPI_SDK {
 		return ( isset($_GET['logged']) && ($_GET['logged'] == 1) || isset($option['fpi_access_token']) );
 	}
 
-	public function has_credentials(){
+	public static function has_credentials(){
 
 		$options = get_option( 'fpi_option' );	
 

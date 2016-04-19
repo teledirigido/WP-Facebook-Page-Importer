@@ -137,7 +137,7 @@ class FPI {
         printf(
             '<input type="password" id="fpi_app_secret" name="fpi_option[fpi_app_secret]" value="%s" />',
             // esc_attr( '12345' )
-            esc_attr( $this->options['fpi_app_secret'] )
+            isset($this->options['fpi_app_secret']) ? esc_attr( $this->options['fpi_app_secret'] ) : ''
         );   
     }
 
@@ -154,7 +154,7 @@ class FPI {
         printf(
             '<input type="password" id="fpi_access_token" name="fpi_option[fpi_access_token]" value="%s" /><br>',
             // esc_attr( '12345' )
-            esc_attr( $this->options['fpi_access_token'] )
+            isset($this->options['fpi_access_token']) ? esc_attr( $this->options['fpi_access_token'] ) : ''
         );
 
 

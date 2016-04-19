@@ -1,5 +1,26 @@
 <?php
 
+/*
+	
+	// Facebook list
+
+	$list = array(
+	
+		// Facebook post
+
+		array(
+			'id' 			=> integer,
+			'created_time' 	=> datetime,
+			'permalink' 	=> string,
+			'full_picture'	=> string,
+			'direct_url'	=> string
+		)
+	)
+
+
+*/
+
+
 class FPI_Import {
 
 	private $list;
@@ -7,7 +28,6 @@ class FPI_Import {
 
 	function __construct($list){
 		$this->list = $list;
-
 
 		// Create posts
 		$this->compose();
@@ -22,8 +42,9 @@ class FPI_Import {
 			$new_post_id	= wp_insert_post($new_post);
 			update_post_meta( $new_post_id, 'facebook_id', $item['id'] );
 			update_post_meta( $new_post_id, 'facebook_created_time', $item['created_time'] );
-			update_post_meta( $new_post_id, 'facebook_permalink', $this->get_facebook_permalink($item) );
+			update_post_meta( $new_post_id, 'facebook_permalink', $item['permalink'] );
 			update_post_meta( $new_post_id, 'facebook_full_picture', $item['full_picture'] );
+			update_post_meta( $new_post_id, 'facebook_direct_url', $item['direct_url'] );
 
 		endforeach;
 
@@ -34,8 +55,8 @@ class FPI_Import {
 	private function get_new_post_args($new_post){
 
 		$current_user = wp_get_current_user();
-	
-		// If Message or Story	
+
+		// If Message or Story
 		if( isset($new_post['story']) ):
 			$post_title = $new_post['story'];
 		else:
@@ -51,7 +72,7 @@ class FPI_Import {
 			'post_author'    => $current_user->ID,
 		);
 
-		
+
 		// Extra args
 		$post_exists = $this->submitted_post_exists($new_post);
 		if( $post_exists['status'] ):
@@ -64,22 +85,10 @@ class FPI_Import {
 
 	}
 
-	private function get_facebook_permalink($item){
-		
-		if( !isset($item['link']) ):
-			$url = split('_', $item['id']);
-			$url = 'https://facebook.com/' . $url[0] . '/posts/' . $url[1];
-		else:
-			$url = $item['link'];
-		endif;
-
-		return $url;
-	}
-
 
 	// ON progress
 	private function submitted_post_exists($post_to_search){
-		
+
 		$found = array(
 			'status' => false
 		);
@@ -93,11 +102,11 @@ class FPI_Import {
 
 		// Check if post exists
         $the_query = new WP_Query($args);
-        if( $the_query->have_posts() ): 
+        if( $the_query->have_posts() ):
         	while( $the_query->have_posts() ):
         		$the_query->the_post();
         		global $post;
-	        	
+
 	        	$found = array(
 	        		'status' => true,
 	        		'ID'	 => $post->ID
@@ -114,28 +123,24 @@ class FPI_Import {
 	public function get_status(){
 		return $this->status;
 	}
-	
+
 }
+
+
+/*
+
+	DEPRECATED
+
+	----------
 
 function do_fpi_ajax(){
 
 	$list = isset( $_POST['list'] ) ? (array)$_POST['list']['data'] : array();
-	
-	/* 
-	//DEBUG
-		$arr = array();
-		array_push($arr, $list[0]);
-		array_push($arr, $list[1]);
-		$list = $arr;
-	//END DEBUG
-	*/
-	
 
-	
 	foreach( $list as &$item ):
 		$item['message'] = esc_attr( $item['message'] );
 	endforeach;
-	
+
 	$import = new FPI_Import($list);
 
 	print_r($result);
@@ -146,3 +151,4 @@ function do_fpi_ajax(){
 
 add_action('wp_ajax_nopriv_do_ajax', 'do_fpi_ajax');
 add_action('wp_ajax_do_ajax', 'do_fpi_ajax');
+*/

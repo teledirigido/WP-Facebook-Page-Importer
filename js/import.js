@@ -7,7 +7,10 @@ jQuery(window).load(function(){
 		var facebook_import = new fpi_import();		
 			connect 		= facebook_import.init();
 
-		if( !connect ) return false;
+		if( !connect ){
+			console.log('you are not connected')
+			return false;
+		}
 		
 
 		fpi_page.list.innerHTML = Mustache.render( fpi_page.message, { message: 'Loading' });
@@ -36,7 +39,7 @@ fpi_import.prototype.on_response = function(response){
 	
 	}).error(function(x){
 		
-		// console.log(x.responseText)
+		console.log(x.responseText)
 
 	});
 

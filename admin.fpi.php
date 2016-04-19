@@ -1,5 +1,7 @@
 <?php 
 
+@session_start();
+
 class FPI {
 	
 	public function __construct() {
@@ -47,11 +49,27 @@ class FPI {
         );
 
         add_settings_field(
+            'fpi_app_secret', // ID
+            'App Page Secret', // Title 
+            array( $this, 'fpi_app_secret_callback' ), // Callback
+            'fpi-admin-page', 
+            'fpi-section' // Section           
+        );
+
+        add_settings_field(
             'fpi_page_id', 
             'Page ID', 
             array( $this, 'fpi_page_id_callback' ), 
             'fpi-admin-page', 
             'fpi-section'
+        );
+
+        add_settings_field(
+            'fpi_access_token', // ID
+            'Access Token', // Title 
+            array( $this, 'fpi_access_token' ), // Callback
+            'fpi-admin-page', 
+            'fpi-section' // Section           
         );
 
     }
@@ -75,17 +93,6 @@ class FPI {
     }
 
     public function print_section_info(){
-    	?>
-    	<ol id="get_started">
-            <li>Add your <a href="//developers.facebook.com/apps/" target="_blank">new Facebook App</a>.</li>
-            <li>Authorize your website with your Facebook App (Login Popup).</li>
-	        <li>Add your App ID, App Secret and Page ID to start. <br> You will some of this info under your <a target="_blank" href="//developers.facebook.com/apps/">Facebook Developers account</a>.
-	        <img src="<?php echo plugin_dir_url( __FILE__ ) ?>/img/myapp.png" alt="" width="400px"></li>
-            <li>Update your settings and start importing!</li>
-            <li>Check your imported <a href="<?php echo admin_url('edit.php?post_type=facebookposts'); ?>" target="_blank">Facebook Post</a></li>
-    	</ol>
-
-        <?php
 
     }
 
@@ -106,6 +113,9 @@ class FPI {
         if( !empty( $input['fpi_page_id'] ) )
             $input['fpi_page_id'] = sanitize_text_field( $input['fpi_page_id'] );
 
+        if( !empty( $input['fpi_app_secret'] ) )
+            $input['fpi_app_secret'] = sanitize_text_field( $input['fpi_app_secret'] );
+
         return $input;
     }
 
@@ -122,12 +132,32 @@ class FPI {
         );
     }
 
+    public function fpi_app_secret_callback(){
+        
+        printf(
+            '<input type="password" id="fpi_app_secret" name="fpi_option[fpi_app_secret]" value="%s" />',
+            // esc_attr( '12345' )
+            esc_attr( $this->options['fpi_app_secret'] )
+        );   
+    }
+
     public function fpi_page_id_callback(){
     	printf(
             '<input type="text" id="fpi_page_id" name="fpi_option[fpi_page_id]" value="%s" />',
             esc_attr( $this->options['fpi_page_id'] )
         );
         echo '<p class="description"><i><a href="//findmyfbid.com/">Click here</a> to find your Page ID.</i></p>';
+    }
+
+    public function fpi_access_token(){
+
+        printf(
+            '<input type="password" id="fpi_access_token" name="fpi_option[fpi_access_token]" value="%s" /><br>',
+            // esc_attr( '12345' )
+            esc_attr( $this->options['fpi_access_token'] )
+        );
+
+
     }
 
 }
@@ -140,5 +170,15 @@ add_action('init', function(){
     endif;
         
     $my_settings_page = new FPI();
+
+    // Remove Token
+    if( FPI_SDK::is_new_token() ):
+        FPI_SDK::remove_token();
+    endif;
+
+    // Create session, Get new Token
+    if( FPI_SDK::is_logged() ):
+       FPI_SDK::create_session();
+    endif;
 
 });

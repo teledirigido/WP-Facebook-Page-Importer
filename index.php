@@ -28,8 +28,10 @@ Facebook Page Importer. If not, see {License URI}.
 
 // Helpers
 require_once 'helpers/post_type.php';
+require_once __DIR__ . '/helpers/facebook-sdk-v5/autoload.php';
 
 // Admin
+require_once 'controller.facebook-sdk.php';
 require_once 'admin.fpi.php';
 require_once 'controller.fpi.php';
 
@@ -38,7 +40,20 @@ add_action('admin_enqueue_scripts',function($hook){
 	
 	if( $hook !== 'tools_page_fpi-settings' )
 		return false;
+
+	wp_enqueue_style( 'fpi-css',
+		plugin_dir_url( __FILE__ ) . 'css/style.css', 
+		__FILE__,
+		'1.0',
+		'screen'
+	);
 	
+	/*
+
+	DEPRECATED
+
+	----------
+
 	wp_enqueue_script('fpi-scripts', 
 		plugin_dir_url( __FILE__ ) . 'js/scripts.js', 
 		array('jquery'), 
@@ -53,15 +68,19 @@ add_action('admin_enqueue_scripts',function($hook){
 		true 
 	);
 
+	// wp_localize_script( 'fpi-import', 'fpiimport', array(
+	// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
+	// ));
+
+
 	wp_enqueue_script('fpi-mustache', 
 		plugin_dir_url( __FILE__ ) . 'helpers/mustache.min.js', 
 		array('jquery'), 
 		'1.0', 
 		true 
 	);
+	
+	*/
 
-	// wp_localize_script( 'fpi-import', 'fpiimport', array(
-	// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
-	// ));
 
 });

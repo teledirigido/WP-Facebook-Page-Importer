@@ -24,7 +24,7 @@ var fpi_post_list = function(list){
 			'fn': 			'do_fpi_ajax',
 			'list': 		list,
 		},
-		  
+
 	});
 };
 
@@ -76,8 +76,8 @@ var fpi_import = function(){
 	this.page_content = function( options ){
 
 		FB.api(
-			options.page_id + '/feed', 'GET', 
-			{"fields":"link,full_picture,story,message,created_time"},
+			options.page_id + '/feed', 'GET',
+			{"fields":"link,full_picture,story,message,created_time,actions"},
 			function(response) {
 		      	// Insert your code here
 				typeof this.on_response === 'function' && this.on_response(response);
@@ -87,6 +87,3 @@ var fpi_import = function(){
 	}
 
 }
-
-
-

@@ -1,0 +1,18 @@
+.fpi-loggin {
+	display: inline-block;
+	text-decoration: none;
+	background-color: #3b5999;
+	padding:0.5rem;
+	margin-top:1rem;
+	color:#FFF!important;
+	box-shadow: none!important;
+}
+
+a.fpi-login:focus, 
+a.fpi-login:active {
+	outline:0 none;
+}
+
+.fpi-loggin:before {
+	padding-right:0.35rem;
+}

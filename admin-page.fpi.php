@@ -39,9 +39,9 @@ $this->options = get_option( 'fpi_option' );
 
 	<ol id="get_started">
         <li>Add your <a href="//developers.facebook.com/apps/" target="_blank">new Facebook App</a>.</li>
-        <li>Authorize your website with your Facebook App (Login Popup).</li>
         <li>Add your App ID, App Secret and Page ID to start. <br> You will some of this info under your <a target="_blank" href="//developers.facebook.com/apps/">Facebook Developers account</a>. <br>
            <img src="<?php echo plugin_dir_url( __FILE__ ) ?>/img/myapp.png" alt="" width="400px"></li>
+        <li>Authorize your website with your Facebook App (Login Popup).</li>
         <li>Update your settings and start importing!</li>
         <li>Check your imported <a href="<?php echo admin_url('edit.php?post_type=facebookposts'); ?>" target="_blank">Facebook Posts</a></li>
 

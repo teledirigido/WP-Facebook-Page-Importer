@@ -152,7 +152,7 @@ class FPI {
     public function fpi_access_token(){
 
         printf(
-            '<input type="password" id="fpi_access_token" name="fpi_option[fpi_access_token]" value="%s" /><br>',
+            '<input type="password" disabled id="fpi_access_token" name="fpi_option[fpi_access_token]" value="%s" /><br><p class="description"><i>This Token is provided after you Log in with Facebook</i></p>',
             // esc_attr( '12345' )
             isset($this->options['fpi_access_token']) ? esc_attr( $this->options['fpi_access_token'] ) : ''
         );

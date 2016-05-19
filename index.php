@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Facebook Page Importer
-Plugin URI:  http://blacksheepdesign.co.nz/
+Plugin URI:  https://github.com/teledirigido/WP-Facebook-Page-Importer
 Description: Dead simple post importer for your Facebook Page
 Version:     0.1a
 Author:      Miguel Garrido

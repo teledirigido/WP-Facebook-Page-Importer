@@ -83,16 +83,16 @@ class FPI_SDK {
 		foreach ($graphEdge as $graphNode) {
 
 			$item = $graphNode->asArray();
-
 			$elem = array(
 				'id' 			=> $item['id'],
-				'story'			=> $item['story'],
+				'story'			=> ( isset($item['story']) ? $item['story'] : false ),
 				'message'		=> $item['message'],
 				'created_time' 	=> $item['created_time'],
-				'created_time' 	=> date_format( $item['created_time'] , 'dd/mm/YYYY' ),
+				'created_time' 	=> date_format( $item['created_time'] , 'd/m/Y' ),
 				'permalink'		=> $item['actions'][0]['link'],
-				'full_picture'	=> $item['full_picture'],
-				'direct_url'	=> $item['actions'][0]['link']
+				'full_picture'	=> ( isset($item['full_picture']) ? $item['full_picture'] : false ),
+				'direct_url'	=> $item['actions'][0]['link'],
+				'post_date'		=> date_format( $item['created_time'] , 'Y-m-d H:i:s' )
 			);
 
 			array_push( $list, $elem ); 

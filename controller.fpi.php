@@ -38,6 +38,7 @@ class FPI_Import {
 
 		foreach($this->list as $item ):
 
+
 			$new_post 		= $this->get_new_post_args($item);
 			$new_post_id	= wp_insert_post($new_post);
 			update_post_meta( $new_post_id, 'facebook_id', $item['id'] );
@@ -57,7 +58,7 @@ class FPI_Import {
 		$current_user = wp_get_current_user();
 
 		// If Message or Story
-		if( isset($new_post['story']) ):
+		if( $new_post['story'] ):
 			$post_title = $new_post['story'];
 		else:
 			$post_title = $new_post['message'];
@@ -66,7 +67,7 @@ class FPI_Import {
 		// Default args
 		$args = array(
 			'post_title'     => $post_title,
-			'post_date'		 => $new_post['created_time'],
+			'post_date'		 => $new_post['post_date'],
 			'post_type'      => 'facebookposts',
 			'post_status'    => 'publish',
 			'post_author'    => $current_user->ID,
